@@ -205,8 +205,45 @@ class Fr_Thumbnails_Folder_Image_Sizes {
                 }
             }
         }
-        
+         
         return $sources;
+    }
+
+
+    /**
+     * Find image's URL
+     * 
+     * Replace the source URL with our custom thumbnails URL when needed.
+     * 
+     * Hooked on `wp_get_attachment_image_src
+     *
+     * @since TBD
+     * @param array $image {
+     *     Array of image data, or boolean false if no image is available.
+     *     @type string $0 Image source URL.
+     *     @type int    $1 Image width in pixels.
+     *     @type int    $2 Image height in pixels.
+     *     @type bool   $3 Whether the image is a resized image.
+     * }
+     * @param int          $attachment_id Image attachment ID.
+     * @param string|int[] $size          Optional. Image size. Accepts any registered image size name, or an array of
+     *                                    width and height values in pixels (in that order). Default 'thumbnail'.
+     * @param bool         $icon          Optional. Whether the image should fall back to a mime type icon. Default false.
+     * @return array                Modified 'image' source data.
+     */
+    public function wp_get_attachment_image_src($image, $attachment_id, $size, $icon) {
+		
+        $image_size_url = $this->get_image_size_url($attachment_id, $size);
+		
+        if ($image_size_url) {
+            /*
+             * If we have been able to find a URL for this image, it "belongs" to our plugin
+             * and we should use it instead of whatever has been computed before
+             */
+            $image[0] = $image_size_url;
+        }
+
+        return $image;
     }
     
     /**

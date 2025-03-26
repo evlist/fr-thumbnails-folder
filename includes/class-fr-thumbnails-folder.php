@@ -154,6 +154,7 @@ class Fr_Thumbnails_Folder {
         $this->loader->add_filter('wp_generate_attachment_metadata', $this->image_sizes, 'maybe_convert_to_image', 10, 3);
         $this->loader->add_action('delete_attachment', $this->image_sizes, 'delete_image_sizes', 10, 3);
         $this->loader->add_filter('wp_calculate_image_srcset', $this->image_sizes, 'modify_srcset_sources', 10, 5);
+        $this->loader->add_filter('wp_get_attachment_image_src', $this->image_sizes, 'wp_get_attachment_image_src', 10, 5);
     }
 
     /**
