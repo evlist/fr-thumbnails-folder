@@ -104,7 +104,7 @@ class Fr_Thumbnails_Folder_Image_Sizes {
 	 *                              or 'update' when the metadata was updated.
      * @return array
 	 */
-    public function maybe_convert_to_image($metadata, $attachment_id, $context) {
+    public function maybe_convert_to_image($metadata, $attachment_id, $context='create') {
         // Metadata was not initially created for new attachment.
         if ($context !== 'create') {
             return $metadata;
